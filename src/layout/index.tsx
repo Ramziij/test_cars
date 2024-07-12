@@ -7,8 +7,8 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex h-full w-full">
-      <Header title={'Магазин машин'} />
+    <div className="h-full w-full">
+      <Header title={'Список машин'} />
       {children}
     </div>
   );
