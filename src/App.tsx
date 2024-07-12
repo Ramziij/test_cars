@@ -1,5 +1,6 @@
 import React from 'react';
 import { Cars, getCars } from './api/getCars';
+import Layout from './layout';
 
 function App() {
   const [cars, setCars] = React.useState<Cars[]>([]);
@@ -19,7 +20,7 @@ function App() {
     carsInfo();
   }, []);
   console.log(cars);
-  return <></>;
+  return <Layout>{<div></div>}</Layout>;
 }
 
 export default App;
