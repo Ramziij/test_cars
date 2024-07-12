@@ -14,7 +14,7 @@ export default function Form({ value, currentValue, handleChange, handleSaveClic
       <div className="mb-3">
         <label className="block mb-1">Имя</label>
         <input
-          id={`${value.name}`}
+          id={`${value.name}_${value.id}`}
           type="text"
           name="name"
           value={currentValue?.name}
@@ -25,7 +25,7 @@ export default function Form({ value, currentValue, handleChange, handleSaveClic
       <div className="mb-3">
         <label className="block mb-1">Модель</label>
         <input
-          id={`${value.model}`}
+          id={`${value.model}_${value.id}`}
           type="text"
           name="model"
           value={currentValue?.model}
@@ -36,7 +36,7 @@ export default function Form({ value, currentValue, handleChange, handleSaveClic
       <div className="mb-3">
         <label className="block mb-1">Цена</label>
         <input
-          id={`${value.price}`}
+          id={`${value.price}_${value.id}`}
           type="text"
           name="price"
           value={currentValue?.price}

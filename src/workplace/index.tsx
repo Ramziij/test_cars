@@ -3,6 +3,7 @@ import { Cars, getCars } from '../api/getCars';
 import CardUnstyled from '../components/CardUnstyled/CardUnstyled';
 import Modal from '../components/Modal';
 import Form from '../components/Form';
+import Map, { Markers } from '../components/Map';
 
 const translateSelectedCriteria = (value: string) => {
   switch (value) {
@@ -21,6 +22,7 @@ const translateSelectedCriteria = (value: string) => {
 
 export default function MainPage() {
   const [cars, setCars] = React.useState<Cars[]>([]);
+  const [dataForMap, setDataForMap] = React.useState<Markers[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
   const [sort, setSort] = React.useState<string>('year-asc');
   const [currentCar, setCurrentCar] = React.useState<Cars | null>(null);
@@ -29,7 +31,18 @@ export default function MainPage() {
     const carsInfo = async () => {
       try {
         const data = await getCars();
+        const dataForMap = data.map((c) => {
+          const markers: Markers = {
+            lat: c.latitude,
+            lon: c.longitude,
+            name: c.name,
+          };
+          return markers;
+        });
+
+        setDataForMap(dataForMap);
         setCars(data);
+
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -76,8 +89,6 @@ export default function MainPage() {
     setCars(cars.filter((car) => car.id !== carId));
   };
 
-  console.log(currentCar);
-
   return (
     <>
       <CardUnstyled
@@ -86,9 +97,7 @@ export default function MainPage() {
       >
         <div className="flex flex-col justify-center w-full">
           <div className="flex flex-row justify-end mt-5 mr-3 items-center">
-            <label htmlFor="sort" className="mr-3">
-              Отсортировать:
-            </label>
+            <label className="mr-3">Отсортировать:</label>
             <div className="dropdown">
               <div tabIndex={0} role="button" className="btn m-1 w-48">
                 {translateSelectedCriteria(sort)}
@@ -132,9 +141,7 @@ export default function MainPage() {
               </ul>
             </div>
             <div className="flex flex-row ml-3">
-              <label htmlFor="sort" className="mr-3">
-                Количество:
-              </label>
+              <label className="mr-3">Количество:</label>
               <p className="font-bold">{cars.length}</p>
             </div>
           </div>
@@ -231,6 +238,15 @@ export default function MainPage() {
                   </CardUnstyled>
                 </div>
               ))}
+          </div>
+          <div className="mt-12">
+            <p className="text-center text-2xl font-bold">{'Расположение на карте'}</p>
+            {loading && dataForMap.length === 0 && (
+              <div className="skeleton w-full h-[800px]"></div>
+            )}
+            {!loading && dataForMap.length > 0 && (
+              <Map markers={dataForMap} mapCenter={[dataForMap[0]?.lat, dataForMap[0]?.lon]} />
+            )}
           </div>
         </div>
       </CardUnstyled>
