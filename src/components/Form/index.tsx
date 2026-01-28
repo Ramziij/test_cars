@@ -1,4 +1,4 @@
-import { Cars } from '../../api/getCars';
+import type { Cars } from '../../api/cars.mock';
 import { handleCloseModal } from '../Modal/func/modalOpenOrClose';
 
 interface FormProps {

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Cars, getCars } from '../api/getCars';
+import { getCars } from '../api/getCars';
 import CardUnstyled from '../components/CardUnstyled/CardUnstyled';
 import Modal from '../components/Modal';
 import Form from '../components/Form';
 import Map, { Markers } from '../components/Map';
+import type { Cars } from '../api/cars.mock';
 
 const translateSelectedCriteria = (value: string) => {
   switch (value) {
@@ -145,7 +146,7 @@ export default function MainPage() {
               <p className="font-bold">{cars.length}</p>
             </div>
           </div>
-          <div className="flex flex-wrap  mt-10 justify-center">
+          <div className="flex flex-wrap  mt-10">
             {loading && (
               <div role="status" className="flex h-full w-full items-center justify-center">
                 <svg
